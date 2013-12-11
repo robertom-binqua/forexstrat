@@ -15,14 +15,14 @@ import static com.binqua.forexstrat.feedreader.core.client.FeedLoginResponse.log
 import static com.binqua.forexstrat.feedreader.core.client.FeedReadResponse.feedReadSuccessful;
 import static com.binqua.forexstrat.feedreader.core.client.FeedReadResponse.feedReadUnsuccessful;
 
-public class ApacheHttpClientClientCommands implements ClientCommands {
+public class ApacheHttpClientTrueFXClientCommands implements ClientCommands {
     private final Configuration feedReaderConfiguration;
     private final HttpClient httpclient;
     private final CurrencyPair currencyPair;
     private final Support support;
     private final CurrencyPairs currencyPairs;
 
-    public ApacheHttpClientClientCommands(Configuration feedReaderConfiguration, HttpClient httpclient, CurrencyPair currencyPair, Support support, CurrencyPairs currencyPairs) {
+    public ApacheHttpClientTrueFXClientCommands(Configuration feedReaderConfiguration, HttpClient httpclient, CurrencyPair currencyPair, Support support, CurrencyPairs currencyPairs) {
         this.feedReaderConfiguration = feedReaderConfiguration;
         this.httpclient = httpclient;
         this.currencyPair = currencyPair;

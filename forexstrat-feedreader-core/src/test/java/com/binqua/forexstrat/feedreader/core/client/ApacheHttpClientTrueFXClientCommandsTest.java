@@ -30,7 +30,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.*;
 
-public class ApacheHttpClientClientCommandsTest {
+public class ApacheHttpClientTrueFXClientCommandsTest {
 
     private static final int TEST_SERVER_PORT = 8080;
     private static final String SERVER_CONTEXT = "test";
@@ -71,7 +71,7 @@ public class ApacheHttpClientClientCommandsTest {
         when(feedReaderConfigurationMock.password()).thenReturn(THE_USER_PASSWORD);
         when(feedReaderConfigurationMock.numberOfSecondsBeforeRetry()).thenReturn(1);
 
-        final ClientCommands clientCommands = new ApacheHttpClientClientCommands(feedReaderConfigurationMock, createHttpClientForTesting(), EUR_USD, mock(Support.class), new EnumBasedCurrencyPairs());
+        final ClientCommands clientCommands = new ApacheHttpClientTrueFXClientCommands(feedReaderConfigurationMock, createHttpClientForTesting(), EUR_USD, mock(Support.class), new EnumBasedCurrencyPairs());
         final ClientsCommandsWrapperToLoginAndGetResponse aClientCommandsWrapper = new ClientsCommandsWrapperToLoginAndGetResponse(clientCommands);
 
         runInASeparateThreadAndStopItIfIsNotFinishedInSeconds(3000, aClientCommandsWrapper);
@@ -96,7 +96,7 @@ public class ApacheHttpClientClientCommandsTest {
         when(feedReaderConfigurationMock.password()).thenReturn(THE_USER_PASSWORD);
         when(feedReaderConfigurationMock.numberOfSecondsBeforeRetry()).thenReturn(1);
 
-        final ClientCommands clientCommands = new ApacheHttpClientClientCommands(feedReaderConfigurationMock, createHttpClientForTesting(), EUR_USD, mock(Support.class), new EnumBasedCurrencyPairs());
+        final ClientCommands clientCommands = new ApacheHttpClientTrueFXClientCommands(feedReaderConfigurationMock, createHttpClientForTesting(), EUR_USD, mock(Support.class), new EnumBasedCurrencyPairs());
         final ClientsCommandsWrapperToLoginAndGetResponse aClientCommandsWrapper = new ClientsCommandsWrapperToLoginAndGetResponse(clientCommands);
 
         runInASeparateThreadAndStopItIfIsNotFinishedInSeconds(3, aClientCommandsWrapper);
@@ -122,7 +122,7 @@ public class ApacheHttpClientClientCommandsTest {
         when(feedReaderConfigurationMock.numberOfSecondsBeforeRetry()).thenReturn(1);
 
         final Support supportMock = mock(Support.class);
-        final ClientCommands clientCommands = new ApacheHttpClientClientCommands(feedReaderConfigurationMock, createHttpClientForTesting(), EUR_USD, supportMock, new EnumBasedCurrencyPairs());
+        final ClientCommands clientCommands = new ApacheHttpClientTrueFXClientCommands(feedReaderConfigurationMock, createHttpClientForTesting(), EUR_USD, supportMock, new EnumBasedCurrencyPairs());
         final ClientsCommandsWrapperToLoginAndGetResponse aClientCommandsWrapper = new ClientsCommandsWrapperToLoginAndGetResponse(clientCommands);
 
         runInASeparateThreadAndStopItIfIsNotFinishedInSeconds(3, aClientCommandsWrapper);
@@ -147,7 +147,7 @@ public class ApacheHttpClientClientCommandsTest {
         when(feedReaderConfigurationMock.password()).thenReturn(THE_USER_PASSWORD);
         when(feedReaderConfigurationMock.numberOfSecondsBeforeRetry()).thenReturn(1);
 
-        final ClientCommands clientCommands = new ApacheHttpClientClientCommands(feedReaderConfigurationMock, createHttpClientForTesting(), EUR_USD, mock(Support.class), new EnumBasedCurrencyPairs());
+        final ClientCommands clientCommands = new ApacheHttpClientTrueFXClientCommands(feedReaderConfigurationMock, createHttpClientForTesting(), EUR_USD, mock(Support.class), new EnumBasedCurrencyPairs());
         final ClientCommandsWrapperToLogin aClientCommandsWrapper = new ClientCommandsWrapperToLogin(clientCommands);
 
         runInASeparateThreadAndStopItIfIsNotFinishedInSeconds(3, aClientCommandsWrapper);
@@ -166,7 +166,7 @@ public class ApacheHttpClientClientCommandsTest {
         when(feedReaderConfigurationMock.password()).thenReturn(THE_USER_PASSWORD);
         when(feedReaderConfigurationMock.numberOfSecondsBeforeRetry()).thenReturn(1);
 
-        final ClientCommands clientCommands = new ApacheHttpClientClientCommands(feedReaderConfigurationMock, createHttpClientForTesting(), EUR_USD, support, new EnumBasedCurrencyPairs());
+        final ClientCommands clientCommands = new ApacheHttpClientTrueFXClientCommands(feedReaderConfigurationMock, createHttpClientForTesting(), EUR_USD, support, new EnumBasedCurrencyPairs());
         final ClientCommandsWrapperToLogin aClientCommandsWrapper = new ClientCommandsWrapperToLogin(clientCommands);
 
         runInASeparateThreadAndStopItIfIsNotFinishedInSeconds(3, aClientCommandsWrapper);
@@ -184,7 +184,7 @@ public class ApacheHttpClientClientCommandsTest {
         when(feedReaderConfigurationMock.password()).thenReturn(THE_USER_PASSWORD);
         when(feedReaderConfigurationMock.numberOfSecondsBeforeRetry()).thenReturn(1);
 
-        final ClientCommands clientCommands = new ApacheHttpClientClientCommands(feedReaderConfigurationMock, createHttpClientForTesting(), EUR_USD, support, new EnumBasedCurrencyPairs());
+        final ClientCommands clientCommands = new ApacheHttpClientTrueFXClientCommands(feedReaderConfigurationMock, createHttpClientForTesting(), EUR_USD, support, new EnumBasedCurrencyPairs());
         final ClientCommandsWrapperToLogin aClientCommandsWrapper = new ClientCommandsWrapperToLogin(clientCommands);
 
         runInASeparateThreadAndStopItIfIsNotFinishedInSeconds(3, aClientCommandsWrapper);
