@@ -5,23 +5,23 @@ import com.binqua.forexstrat.feedreader.core.actions.FeedReaderResponseAction;
 
 public class FeedReaderClient implements Runnable {
 
-    private final ClientCommands feedReadClient;
+    private final ClientCommands clientCommands;
     private final FeedReaderResponseAction[] actions;
 
-    public FeedReaderClient(ClientCommands feedReadClient, FeedReaderResponseAction... actions) {
-        this.feedReadClient = feedReadClient;
+    public FeedReaderClient(ClientCommands clientCommands, FeedReaderResponseAction... actions) {
+        this.clientCommands = clientCommands;
         this.actions = actions;
     }
 
     public void run() {
-        FeedLoginResponse feedLoginResponse = feedReadClient.login();
+        FeedLoginResponse feedLoginResponse = clientCommands.login();
         if (feedLoginResponse.loginHasBeenAborted()) {
             return;
         }
         while (!Thread.currentThread().isInterrupted()) {
-            FeedReadResponse readResponse = feedReadClient.read(feedLoginResponse);
+            FeedReadResponse readResponse = clientCommands.read(feedLoginResponse);
             if (readResponse.feedReadResponseUnsuccessful()) {
-                feedLoginResponse = feedReadClient.login();
+                feedLoginResponse = clientCommands.login();
                 if (feedLoginResponse.loginHasBeenAborted()) {
                     return;
                 }

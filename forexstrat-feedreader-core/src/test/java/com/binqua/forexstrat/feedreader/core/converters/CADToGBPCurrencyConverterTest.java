@@ -1,4 +1,4 @@
-package com.binqua.forexstrat.feedreader.core.converter;
+package com.binqua.forexstrat.feedreader.core.converters;
 
 import com.binqua.forexstrat.feedreader.core.repositories.CurrencyPairQuotationsRepository;
 import com.binqua.forexstrat.feedreader.core.model.impl.CurrencyPairQuotation;
@@ -10,7 +10,7 @@ import java.math.BigDecimal;
 import static com.binqua.forexstrat.feedreader.core.model.impl.CurrencyPairQuotation.aCurrencyPairValue;
 import static com.binqua.forexstrat.feedreader.core.model.impl.EnumBasedCurrencyPair.CAD_JPY;
 import static com.binqua.forexstrat.feedreader.core.model.impl.EnumBasedCurrencyPair.GBP_JPY;
-import static com.binqua.forexstrat.feedreader.core.converter.PriceOption.BUY;
+import static com.binqua.forexstrat.feedreader.core.converters.PriceOption.BUY;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.mock;

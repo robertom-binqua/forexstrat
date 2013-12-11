@@ -30,7 +30,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.*;
 
-public class ApacheHttpClientFeedReaderClientTest {
+public class ApacheHttpClientClientCommandsTest {
 
     private static final int TEST_SERVER_PORT = 8080;
     private static final String SERVER_CONTEXT = "test";
@@ -71,18 +71,14 @@ public class ApacheHttpClientFeedReaderClientTest {
         when(feedReaderConfigurationMock.password()).thenReturn(THE_USER_PASSWORD);
         when(feedReaderConfigurationMock.numberOfSecondsBeforeRetry()).thenReturn(1);
 
-        final ClientCommands feedReaderClient = new ApacheHttpClientFeedReaderClient(feedReaderConfigurationMock, createHttpClientForTesting(), EUR_USD, mock(Support.class), new EnumBasedCurrencyPairs());
-        final RunnableFeedReaderClientToLoginAndThenGetResponse runnable = new RunnableFeedReaderClientToLoginAndThenGetResponse(feedReaderClient);
+        final ClientCommands clientCommands = new ApacheHttpClientClientCommands(feedReaderConfigurationMock, createHttpClientForTesting(), EUR_USD, mock(Support.class), new EnumBasedCurrencyPairs());
+        final ClientsCommandsWrapperToLoginAndGetResponse aClientCommandsWrapper = new ClientsCommandsWrapperToLoginAndGetResponse(clientCommands);
 
-        runInASeparateThreadAndStopItIfIsNotFinishedInSeconds(3000, runnable);
+        runInASeparateThreadAndStopItIfIsNotFinishedInSeconds(3000, aClientCommandsWrapper);
 
-        assertThat("login should not be aborted" + fakeFeedServer, runnable.feedLoginResponse().loginHasBeenAborted(), is(false));
-        assertThat("feed reader response should be successful." + fakeFeedServer, runnable.feedReadResponse().feedReadResponseUnsuccessful(), is(false));
-        assertThat("feed reader response should be empty." + fakeFeedServer, runnable.feedReadResponse().getResponse(), is(""));
-    }
-
-    private void forTheInterruptToTakeEffectWaitForSeconds(int seconds) throws InterruptedException {
-        sleepForSeconds(seconds);
+        assertThat("login should not be aborted" + fakeFeedServer, aClientCommandsWrapper.feedLoginResponse().loginHasBeenAborted(), is(false));
+        assertThat("feed reader response should be successful." + fakeFeedServer, aClientCommandsWrapper.feedReadResponse().feedReadResponseUnsuccessful(), is(false));
+        assertThat("feed reader response should be empty." + fakeFeedServer, aClientCommandsWrapper.feedReadResponse().getResponse(), is(""));
     }
 
     @Test
@@ -100,14 +96,14 @@ public class ApacheHttpClientFeedReaderClientTest {
         when(feedReaderConfigurationMock.password()).thenReturn(THE_USER_PASSWORD);
         when(feedReaderConfigurationMock.numberOfSecondsBeforeRetry()).thenReturn(1);
 
-        final ClientCommands feedReaderClient = new ApacheHttpClientFeedReaderClient(feedReaderConfigurationMock, createHttpClientForTesting(), EUR_USD, mock(Support.class), new EnumBasedCurrencyPairs());
-        final RunnableFeedReaderClientToLoginAndThenGetResponse runnable = new RunnableFeedReaderClientToLoginAndThenGetResponse(feedReaderClient);
+        final ClientCommands clientCommands = new ApacheHttpClientClientCommands(feedReaderConfigurationMock, createHttpClientForTesting(), EUR_USD, mock(Support.class), new EnumBasedCurrencyPairs());
+        final ClientsCommandsWrapperToLoginAndGetResponse aClientCommandsWrapper = new ClientsCommandsWrapperToLoginAndGetResponse(clientCommands);
 
-        runInASeparateThreadAndStopItIfIsNotFinishedInSeconds(3, runnable);
+        runInASeparateThreadAndStopItIfIsNotFinishedInSeconds(3, aClientCommandsWrapper);
 
-        assertThat("login should not be aborted" + fakeFeedServer, runnable.feedLoginResponse().loginHasBeenAborted(), is(false));
-        assertThat("feed reader response should be successful." + fakeFeedServer, runnable.feedReadResponse().feedReadResponseUnsuccessful(), is(false));
-        assertThat("feed reader response is wrong." + fakeFeedServer, runnable.feedReadResponse().getResponse(), is(nonTrimmedFeedReadResponse.trim()));
+        assertThat("login should not be aborted" + fakeFeedServer, aClientCommandsWrapper.feedLoginResponse().loginHasBeenAborted(), is(false));
+        assertThat("feed reader response should be successful." + fakeFeedServer, aClientCommandsWrapper.feedReadResponse().feedReadResponseUnsuccessful(), is(false));
+        assertThat("feed reader response is wrong." + fakeFeedServer, aClientCommandsWrapper.feedReadResponse().getResponse(), is(nonTrimmedFeedReadResponse.trim()));
     }
 
     @Test
@@ -126,14 +122,14 @@ public class ApacheHttpClientFeedReaderClientTest {
         when(feedReaderConfigurationMock.numberOfSecondsBeforeRetry()).thenReturn(1);
 
         final Support supportMock = mock(Support.class);
-        final ClientCommands feedReaderClient = new ApacheHttpClientFeedReaderClient(feedReaderConfigurationMock, createHttpClientForTesting(), EUR_USD, supportMock, new EnumBasedCurrencyPairs());
-        final RunnableFeedReaderClientToLoginAndThenGetResponse runnable = new RunnableFeedReaderClientToLoginAndThenGetResponse(feedReaderClient);
+        final ClientCommands clientCommands = new ApacheHttpClientClientCommands(feedReaderConfigurationMock, createHttpClientForTesting(), EUR_USD, supportMock, new EnumBasedCurrencyPairs());
+        final ClientsCommandsWrapperToLoginAndGetResponse aClientCommandsWrapper = new ClientsCommandsWrapperToLoginAndGetResponse(clientCommands);
 
-        runInASeparateThreadAndStopItIfIsNotFinishedInSeconds(3, runnable);
+        runInASeparateThreadAndStopItIfIsNotFinishedInSeconds(3, aClientCommandsWrapper);
 
-        assertThat("login has been aborted" + fakeFeedServer, runnable.feedLoginResponse().loginHasBeenAborted(), is(false));
-        assertThat("feed reader response unsuccessful" + fakeFeedServer, runnable.feedReadResponse().feedReadResponseUnsuccessful(), is(true));
-        assertThat("feed reader response" + fakeFeedServer, runnable.feedReadResponse().getResponse(), is(CoreMatchers.<Object>nullValue()));
+        assertThat("login has been aborted" + fakeFeedServer, aClientCommandsWrapper.feedLoginResponse().loginHasBeenAborted(), is(false));
+        assertThat("feed reader response unsuccessful" + fakeFeedServer, aClientCommandsWrapper.feedReadResponse().feedReadResponseUnsuccessful(), is(true));
+        assertThat("feed reader response" + fakeFeedServer, aClientCommandsWrapper.feedReadResponse().getResponse(), is(CoreMatchers.<Object>nullValue()));
 
         verify(supportMock).info("Unsuccessful response EUR/USDUSD/JPYGBP/USD.... from " + URL_HOST_PLUS_PREFIX + "?id=" + THE_USER + ":" + THE_USER_PASSWORD + ":rates:1324041751649");
     }
@@ -151,24 +147,14 @@ public class ApacheHttpClientFeedReaderClientTest {
         when(feedReaderConfigurationMock.password()).thenReturn(THE_USER_PASSWORD);
         when(feedReaderConfigurationMock.numberOfSecondsBeforeRetry()).thenReturn(1);
 
-        final ClientCommands feedReaderClient = new ApacheHttpClientFeedReaderClient(feedReaderConfigurationMock, createHttpClientForTesting(), EUR_USD, mock(Support.class), new EnumBasedCurrencyPairs());
-        final RunnableFeedReaderClientToLogin runnable = new RunnableFeedReaderClientToLogin(feedReaderClient);
+        final ClientCommands clientCommands = new ApacheHttpClientClientCommands(feedReaderConfigurationMock, createHttpClientForTesting(), EUR_USD, mock(Support.class), new EnumBasedCurrencyPairs());
+        final ClientCommandsWrapperToLogin aClientCommandsWrapper = new ClientCommandsWrapperToLogin(clientCommands);
 
-        runInASeparateThreadAndStopItIfIsNotFinishedInSeconds(3, runnable);
+        runInASeparateThreadAndStopItIfIsNotFinishedInSeconds(3, aClientCommandsWrapper);
 
-        assertThat("login response" + fakeFeedServer, runnable.loginResponse().getResponse(), is(expectedLoginResponse));
-        assertThat("login response currency pair", runnable.loginResponse().getCurrencyPair(), (Matcher<? super CurrencyPair>) is(EUR_USD));
+        assertThat("login response" + fakeFeedServer, aClientCommandsWrapper.loginResponse().getResponse(), is(expectedLoginResponse));
+        assertThat("login response currency pair", aClientCommandsWrapper.loginResponse().getCurrencyPair(), (Matcher<? super CurrencyPair>) is(EUR_USD));
     }
-
-    private void runInASeparateThreadAndStopItIfIsNotFinishedInSeconds(int seconds, Runnable runnable) throws InterruptedException {
-        theFeedReaderClientThread = new Thread(runnable);
-        theFeedReaderClientThread.start();
-        theFeedReaderClientThread.join(seconds * 1000);
-
-        theFeedReaderClientThread.interrupt();
-        forTheInterruptToTakeEffectWaitForSeconds(1);
-    }
-
 
     @Test
     public void givenTheFeedServerIsNotStartedThanLoginTriesEveryNumberOfSecondsSpecifiedByTheConfiguration() throws IOException, InterruptedException {
@@ -180,10 +166,10 @@ public class ApacheHttpClientFeedReaderClientTest {
         when(feedReaderConfigurationMock.password()).thenReturn(THE_USER_PASSWORD);
         when(feedReaderConfigurationMock.numberOfSecondsBeforeRetry()).thenReturn(1);
 
-        final ClientCommands feedReaderClient = new ApacheHttpClientFeedReaderClient(feedReaderConfigurationMock, createHttpClientForTesting(), EUR_USD, support, new EnumBasedCurrencyPairs());
-        final RunnableFeedReaderClientToLogin runnable = new RunnableFeedReaderClientToLogin(feedReaderClient);
+        final ClientCommands clientCommands = new ApacheHttpClientClientCommands(feedReaderConfigurationMock, createHttpClientForTesting(), EUR_USD, support, new EnumBasedCurrencyPairs());
+        final ClientCommandsWrapperToLogin aClientCommandsWrapper = new ClientCommandsWrapperToLogin(clientCommands);
 
-        runInASeparateThreadAndStopItIfIsNotFinishedInSeconds(3, runnable);
+        runInASeparateThreadAndStopItIfIsNotFinishedInSeconds(3, aClientCommandsWrapper);
 
         verify(support, new AtLeast(2)).feedLoginProblem("Problem connecting to " + URL_HOST_PLUS_PREFIX + "?u=" + THE_USER + "&p=" + THE_USER_PASSWORD + "&q=rates&c=EUR/USD&f=csv&s=n. Retrying every 1 secs.", "Connection to " + FEED_URL_HOST + " refused");
     }
@@ -198,32 +184,46 @@ public class ApacheHttpClientFeedReaderClientTest {
         when(feedReaderConfigurationMock.password()).thenReturn(THE_USER_PASSWORD);
         when(feedReaderConfigurationMock.numberOfSecondsBeforeRetry()).thenReturn(1);
 
-        final ClientCommands feedReaderClient = new ApacheHttpClientFeedReaderClient(feedReaderConfigurationMock, createHttpClientForTesting(), EUR_USD, support, new EnumBasedCurrencyPairs());
-        final RunnableFeedReaderClientToLogin runnableFeedReaderClient = new RunnableFeedReaderClientToLogin(feedReaderClient);
+        final ClientCommands clientCommands = new ApacheHttpClientClientCommands(feedReaderConfigurationMock, createHttpClientForTesting(), EUR_USD, support, new EnumBasedCurrencyPairs());
+        final ClientCommandsWrapperToLogin aClientCommandsWrapper = new ClientCommandsWrapperToLogin(clientCommands);
 
-        runInASeparateThreadAndStopItIfIsNotFinishedInSeconds(3, runnableFeedReaderClient);
+        runInASeparateThreadAndStopItIfIsNotFinishedInSeconds(3, aClientCommandsWrapper);
 
-        assertThat("loginHasBeenAborted",runnableFeedReaderClient.loginResponse().loginHasBeenAborted(), is(equalTo(true)));
+        assertThat("loginHasBeenAborted", aClientCommandsWrapper.loginResponse().loginHasBeenAborted(), is(equalTo(true)));
 
         verify(support, new AtLeast(1)).feedLoginProblem("Problem connecting to " + URL_HOST_PLUS_PREFIX + "?u=" + THE_USER + "&p=" + THE_USER_PASSWORD + "&q=rates&c=EUR/USD&f=csv&s=n. Retrying every 1 secs.", "Connection to " + FEED_URL_HOST + " refused");
     }
 
-    class RunnableFeedReaderClientToLoginAndThenGetResponse implements Runnable {
-        private ClientCommands feedReaderClient;
-        private FeedReadResponse readResponse;
+
+    private void forTheInterruptToTakeEffectWaitForSeconds(int seconds) throws InterruptedException {
+        sleepForSeconds(seconds);
+    }
+
+    private void runInASeparateThreadAndStopItIfIsNotFinishedInSeconds(int seconds, Runnable runnable) throws InterruptedException {
+        theFeedReaderClientThread = new Thread(runnable);
+        theFeedReaderClientThread.start();
+        theFeedReaderClientThread.join(seconds * 1000);
+
+        theFeedReaderClientThread.interrupt();
+        forTheInterruptToTakeEffectWaitForSeconds(1);
+    }
+
+    class ClientsCommandsWrapperToLoginAndGetResponse implements Runnable {
+        private ClientCommands clientCommands;
+        private FeedReadResponse feedReadResponse;
         private FeedLoginResponse feedLoginResponse;
 
-        RunnableFeedReaderClientToLoginAndThenGetResponse(ClientCommands feedReaderClient) {
-            this.feedReaderClient = feedReaderClient;
+        ClientsCommandsWrapperToLoginAndGetResponse(ClientCommands clientCommands) {
+            this.clientCommands = clientCommands;
         }
 
         public void run() {
-            feedLoginResponse = feedReaderClient.login();
-            readResponse = feedReaderClient.read(feedLoginResponse);
+            feedLoginResponse = clientCommands.login();
+            feedReadResponse = clientCommands.read(feedLoginResponse);
         }
 
         FeedReadResponse feedReadResponse() {
-            return readResponse;
+            return feedReadResponse;
         }
 
         FeedLoginResponse feedLoginResponse() {
@@ -232,16 +232,16 @@ public class ApacheHttpClientFeedReaderClientTest {
 
     }
 
-    class RunnableFeedReaderClientToLogin implements Runnable {
-        private ClientCommands feedReaderClient;
+    class ClientCommandsWrapperToLogin implements Runnable {
+        private ClientCommands clientCommands;
         private FeedLoginResponse feedLoginResponse;
 
-        RunnableFeedReaderClientToLogin(ClientCommands feedReaderClient) {
-            this.feedReaderClient = feedReaderClient;
+        ClientCommandsWrapperToLogin(ClientCommands clientCommands) {
+            this.clientCommands = clientCommands;
         }
 
         public void run() {
-            feedLoginResponse = feedReaderClient.login();
+            feedLoginResponse = clientCommands.login();
         }
 
         FeedLoginResponse loginResponse() {

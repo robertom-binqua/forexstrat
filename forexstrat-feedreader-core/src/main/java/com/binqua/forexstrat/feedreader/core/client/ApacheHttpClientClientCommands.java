@@ -15,14 +15,14 @@ import static com.binqua.forexstrat.feedreader.core.client.FeedLoginResponse.log
 import static com.binqua.forexstrat.feedreader.core.client.FeedReadResponse.feedReadSuccessful;
 import static com.binqua.forexstrat.feedreader.core.client.FeedReadResponse.feedReadUnsuccessful;
 
-public class ApacheHttpClientFeedReaderClient implements ClientCommands {
+public class ApacheHttpClientClientCommands implements ClientCommands {
     private final Configuration feedReaderConfiguration;
     private final HttpClient httpclient;
     private final CurrencyPair currencyPair;
     private final Support support;
     private final CurrencyPairs currencyPairs;
 
-    public ApacheHttpClientFeedReaderClient(Configuration feedReaderConfiguration, HttpClient httpclient, CurrencyPair currencyPair, Support support, CurrencyPairs currencyPairs) {
+    public ApacheHttpClientClientCommands(Configuration feedReaderConfiguration, HttpClient httpclient, CurrencyPair currencyPair, Support support, CurrencyPairs currencyPairs) {
         this.feedReaderConfiguration = feedReaderConfiguration;
         this.httpclient = httpclient;
         this.currencyPair = currencyPair;
@@ -48,10 +48,6 @@ public class ApacheHttpClientFeedReaderClient implements ClientCommands {
         return loginAborted(loginHttpGetCommand);
     }
 
-    private void waitForSeconds(int numberOfSeconds) throws InterruptedException {
-        Thread.sleep(numberOfSeconds * 1000);
-    }
-
     public FeedReadResponse read(FeedLoginResponse loginResponse) {
         final HttpGet httpGetQuotes = getQuotes(loginResponse.getResponse());
         try {
@@ -73,6 +69,10 @@ public class ApacheHttpClientFeedReaderClient implements ClientCommands {
 
     private boolean currentThreadHasNotBeInterrupted() {
         return !Thread.currentThread().isInterrupted();
+    }
+
+    private void waitForSeconds(int numberOfSeconds) throws InterruptedException {
+        Thread.sleep(numberOfSeconds * 1000);
     }
 
     private boolean responseIsCorrect(String response, CurrencyPair currencyPair) {

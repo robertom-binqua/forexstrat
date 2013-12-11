@@ -1,6 +1,6 @@
 package com.binqua.forexstrat.feedreader.core.repositories;
 
-import com.binqua.forexstrat.feedreader.core.converter.CurrencyConverterException;
+import com.binqua.forexstrat.feedreader.core.converters.CurrencyConverterException;
 import org.junit.Test;
 
 public class CurrencyPairQuotationsRepositoryForDerivedCurrencyPairsTest {

@@ -1,10 +1,10 @@
 package com.binqua.forexstrat.feedreader.core;
 
 import com.binqua.forexstrat.feedreader.core.client.*;
-import com.binqua.forexstrat.feedreader.core.converter.AUDToCADCurrencyConverter;
-import com.binqua.forexstrat.feedreader.core.converter.CurrenciesConverter;
-import com.binqua.forexstrat.feedreader.core.converter.CurrencyConverter;
-import com.binqua.forexstrat.feedreader.core.converter.ToPoundsConverter;
+import com.binqua.forexstrat.feedreader.core.converters.AUDToCADCurrencyConverter;
+import com.binqua.forexstrat.feedreader.core.converters.CurrenciesConverter;
+import com.binqua.forexstrat.feedreader.core.converters.CurrencyConverter;
+import com.binqua.forexstrat.feedreader.core.converters.ToPoundsConverter;
 import com.binqua.forexstrat.feedreader.core.model.CurrencyPair;
 import com.binqua.forexstrat.feedreader.core.model.impl.EnumBasedCurrencyPair;
 import com.binqua.forexstrat.feedreader.core.model.impl.EnumBasedCurrencyPairs;

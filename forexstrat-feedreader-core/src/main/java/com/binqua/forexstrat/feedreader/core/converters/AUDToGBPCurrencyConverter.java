@@ -1,4 +1,4 @@
-package com.binqua.forexstrat.feedreader.core.converter;
+package com.binqua.forexstrat.feedreader.core.converters;
 
 import com.binqua.forexstrat.feedreader.core.repositories.CurrencyPairQuotationsRepository;
 import com.binqua.forexstrat.feedreader.core.repositories.CurrencyPairQuotationNotAvailableException;

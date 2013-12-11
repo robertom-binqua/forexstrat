@@ -18,7 +18,7 @@ public class ClientCommandsFactory {
     }
 
     ClientCommands createClientCommandsWith(HttpClient aHttpClient, CurrencyPair aCurrencyPair) {
-        return new ApacheHttpClientFeedReaderClient(
+        return new ApacheHttpClientClientCommands(
                 theFeedReaderConfiguration,
                 aHttpClient,
                 aCurrencyPair,

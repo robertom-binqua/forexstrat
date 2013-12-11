@@ -4,9 +4,9 @@ import com.binqua.forexstrat.feedreader.core.repositories.CurrencyPairQuotations
 import com.binqua.forexstrat.feedreader.core.model.CurrencyPair;
 import com.binqua.forexstrat.feedreader.core.model.impl.CurrencyPairQuotation;
 import com.binqua.forexstrat.feedreader.core.repositories.CurrencyPairQuotationNotAvailableException;
-import com.binqua.forexstrat.feedreader.core.converter.CurrenciesConverter;
-import com.binqua.forexstrat.feedreader.core.converter.CurrencyConverter;
-import com.binqua.forexstrat.feedreader.core.converter.CurrencyConverterException;
+import com.binqua.forexstrat.feedreader.core.converters.CurrenciesConverter;
+import com.binqua.forexstrat.feedreader.core.converters.CurrencyConverter;
+import com.binqua.forexstrat.feedreader.core.converters.CurrencyConverterException;
 
 import java.util.concurrent.CopyOnWriteArrayList;
 

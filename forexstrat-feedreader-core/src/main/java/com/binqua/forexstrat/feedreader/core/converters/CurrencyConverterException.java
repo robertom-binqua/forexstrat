@@ -1,4 +1,4 @@
-package com.binqua.forexstrat.feedreader.core.converter;
+package com.binqua.forexstrat.feedreader.core.converters;
 
 public class CurrencyConverterException extends Exception {
     public CurrencyConverterException(String message) {

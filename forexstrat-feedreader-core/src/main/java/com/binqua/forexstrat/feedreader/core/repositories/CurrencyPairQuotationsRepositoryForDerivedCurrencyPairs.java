@@ -1,7 +1,7 @@
 package com.binqua.forexstrat.feedreader.core.repositories;
 
-import com.binqua.forexstrat.feedreader.core.converter.CurrencyConverter;
-import com.binqua.forexstrat.feedreader.core.converter.CurrencyConverterException;
+import com.binqua.forexstrat.feedreader.core.converters.CurrencyConverter;
+import com.binqua.forexstrat.feedreader.core.converters.CurrencyConverterException;
 import com.binqua.forexstrat.feedreader.core.model.CurrencyPair;
 import com.binqua.forexstrat.feedreader.core.model.impl.CurrencyPairQuotation;
 
@@ -9,8 +9,8 @@ import java.util.List;
 import java.util.Map;
 
 import static com.binqua.forexstrat.feedreader.core.model.impl.CurrencyPairQuotation.aCurrencyPairValue;
-import static com.binqua.forexstrat.feedreader.core.converter.PriceOption.BUY;
-import static com.binqua.forexstrat.feedreader.core.converter.PriceOption.SELL;
+import static com.binqua.forexstrat.feedreader.core.converters.PriceOption.BUY;
+import static com.binqua.forexstrat.feedreader.core.converters.PriceOption.SELL;
 
 public class CurrencyPairQuotationsRepositoryForDerivedCurrencyPairs implements CurrencyPairQuotationsRepository {
 
